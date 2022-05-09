@@ -1,0 +1,26 @@
+div::after {
+    content: "";
+    /* background: url(image.jpg); */
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+    text-align: center;
+  
+    /* background-position: center; */
+    /* background-size: 70vh;  */
+  }
+  
+  #divCuerpo{
+    height: 100vh;
+    text-align: center;
+    background-image: url("https://ouch-cdn2.icons8.com/_2uDJ10-ae2PpZyzobx2YJpqI5v-4c7IOzqWa9paqMQ/rs:fit:1368:912/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvMzAx/L2Y1ZWI5ZGEwLTM3/ZWMtNDUxYy1iODNl/LTVjMzc1NGU5NjQx/NC5zdmc.png");
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 100vh;
+    
+  }

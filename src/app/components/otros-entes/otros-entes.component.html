@@ -1,0 +1,104 @@
+<div class='tituloPagina'>
+    Generación de XML para Otros Entes
+  </div>
+  
+  <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
+  <form>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4 col-md-2">
+            <label class="col-form-label">Origen:</label>
+          </div>
+          <div class="col-sm-8 col-md-2">
+              <select class="form-control">
+                  <option>PSRM</option>
+                  <option>OTAX</option>
+                  <option>GANT</option>        
+              </select>
+          </div>        
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-sm-4 col-md-2">
+            <label class="col-form-label">Banco:</label>
+          </div>
+          <div class="col-sm-8 col-md-2">
+            <input type="text" class="form-control" maxlength="55"/>
+        </div>
+
+        <div class="col-sm-4 col-md-2">
+            <label class="col-form-label">Comisión:</label>
+          </div>
+          <div class="col-sm-8 col-md-2">
+              <select class="form-control">
+                  <option>Por defecto</option>
+                  <option>Credito</option>
+                  <option>Debito</option>        
+              </select>
+          </div>
+
+        <div class="col-sm-4 col-md-2">
+          <label class="col-form-label">Fecha de rendición:</label>
+        </div>
+        <div class="col-sm-8 col-md-2">
+          <input type="text" class="form-control" maxlength="55"/>
+        </div>
+      </div>
+
+    
+      <hr>
+
+      <div class="row">
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Boletas:</label>
+        </div>
+        <div class="col-sm-8 col-md-2">
+            <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Importes:</label>
+        </div>
+        <div class="col-sm-8 col-md-1">
+            <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+            <label class="col-form-label">Pagos:</label>
+        </div>
+        <div class="col-sm-8 col-md-2">
+            <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+            <label class="col-form-label">Cant cuotas:</label>
+        </div>
+        <div class="col-sm-8 col-md-1">
+              <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+            <label class="col-form-label">Cuota actual:</label>
+        </div>
+        <div class="col-sm-8 col-md-1">
+              <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+        </div>
+
+      </div>
+
+    <hr>
+  
+      <!-- Botones -->
+      <div class="row justify-content-center botones">
+        <button type="button" class="btn btn-primary">
+              <i class="fas fa-search"> </i> Generar XML
+          </button>
+        <button type="button" class="btn btn-primary">
+              <i class="fas fa-plus"> </i> 
+              Verificar cantidad de registros cargados
+          </button>
+      </div>
+    </div>
+  </form>
