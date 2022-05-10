@@ -3,7 +3,7 @@
   </div>
   
   <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
-  <form>
+  <form [formGroup]="formOtrosEntes">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-4 col-md-2">
@@ -22,10 +22,10 @@
 
       <div class="row">
         <div class="col-sm-4 col-md-2">
-            <label class="col-form-label">Banco:</label>
+            <label class="col-form-label" for="nroBanco">Banco:</label>
           </div>
           <div class="col-sm-8 col-md-2">
-            <input type="text" class="form-control" maxlength="55"/>
+            <input id="nroBanco" type="text" class="form-control" maxlength="55"/>
         </div>
 
         <div class="col-sm-4 col-md-2">
@@ -43,7 +43,7 @@
           <label class="col-form-label">Fecha de rendición:</label>
         </div>
         <div class="col-sm-8 col-md-2">
-          <input type="text" class="form-control" maxlength="55"/>
+          <input type="text" class="form-control" maxlength="55" id="fechaRendicion"/>
         </div>
       </div>
 
@@ -92,7 +92,7 @@
   
       <!-- Botones -->
       <div class="row justify-content-center botones">
-        <button type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary" (click)="generarXML()">
               <i class="fas fa-search"> </i> Generar XML
           </button>
         <button type="button" class="btn btn-primary">
