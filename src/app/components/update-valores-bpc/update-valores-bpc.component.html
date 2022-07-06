@@ -1,0 +1,52 @@
+<div class='tituloPagina'>
+    Actualizacion de indices
+</div>
+
+<form [formGroup]="updateValoresBPCForm" (ngSubmit)="actualizarProducto()">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-md-2">
+                <label class="col-form-label">Campo:</label>
+            </div>
+            <div class="col-sm-8 col-md-3">
+                <input type="text" class="form-control" formControlName="campo"/>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-sm-4 col-md-2">
+                <label class="col-form-label">Indice Inicio:</label>
+            </div>
+            <div class="col-sm-8 col-md-3">
+                <input type="text" class="form-control" formControlName="inicio"/>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-sm-4 col-md-2">
+                <label class="col-form-label">Indice Fin:</label>
+            </div>
+            <div class="col-sm-8 col-md-3">
+                <input type="text" class="form-control" formControlName="fin"/>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Botones -->
+    <div class="justify-content-center botones">
+        <button routerLink="/update-bpc" type="submit" class="btn btn-primary" (click)="actualizarProducto()">
+            <i class="fas fa-search"> </i> Actualizar
+        </button>
+        <button routerLink="/update-bpc" type="button" class="btn btn-primary">
+            <i class="fas fa-plus"> </i>
+            Volver
+        </button>
+    </div>
+
+</form>

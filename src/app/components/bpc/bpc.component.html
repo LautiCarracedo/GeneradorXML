@@ -3,14 +3,14 @@
 </div>
 
 <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
-<form>
+<form [formGroup]="bpcForm" (ngSubmit)="obtenerXMLGeneradoBPC()">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-4 col-md-2">
                 <label class="col-form-label">Origen:</label>
             </div>
             <div class="col-sm-8 col-md-2">
-                <select class="form-control">
+                <select class="form-select" formControlName="origen">
                     <option>PSRM</option>
                     <option>OTAX</option>
                     <option>GANT</option>
@@ -22,50 +22,112 @@
 
         <div class="row">
             <div class="col-sm-4 col-md-2">
+                <label class="col-form-label">Formato XML:</label>
+            </div>
+            <div class="col-sm-8 col-md-2">
+                <select [(ngModel)]="tipo" class="form-select" formControlName="formatoXML">
+                    <option value="0">Pago presencial</option>
+                    <option value="1">Pago electronico</option>
+                    <option value="2">Ambos pagos</option>
+                </select>
+            </div>
+            <small>Se mostrarán los campos correspondientes al seleccionar el formato</small>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-sm-4 col-md-2">
                 <label class="col-form-label">Fecha de rendición:</label>
             </div>
             <div class="col-sm-8 col-md-2">
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" [class.is-invalid]="fechaRendicionNoValida" formControlName="fechaRendicion" placeholder="DD/MM/AAAA" maxlength="10"/>
+            </div>
+            <div>
+                <small *ngIf="fechaRendicionNoValida" style="color: red"
+                        class="text-danger d-inline-flex m-2 px-4 bd-highlight justify-content-center">Fecha rendicion debe ser DD/MM/AAAA
+                    </small>
             </div>
         </div>
 
         <hr>
 
-        <div class="row">
-            <p><b>Codigos de barras para pagos presenciales</b></p>
-            <div class="col-sm-4 col-md-1">
-                <label class="col-form-label">Cod barra 1:</label>
-            </div>
-            <div class="col-sm-8 col-md-5">
-                <textarea cols="40" rows="10" class="form-control"></textarea>
-            </div>
-
-            <div class="col-sm-4 col-md-1">
-                <label class="col-form-label">Cod barra 2:</label>
-            </div>
-            <div class="col-sm-8 col-md-5">
-                <textarea cols="40" rows="10" class="form-control"></textarea>
-            </div>
-        </div>
-
-        <hr>
-        
-        <div class="row">
-            <p><b>Codigos de barras para pagos electrónicos</b></p>
-            <div class="col-sm-4 col-md-1">
-                <label class="col-form-label">Cod barra 1:</label>
-            </div>
-            <div class="col-sm-8 col-md-5">
-                <textarea cols="40" rows="10" class="form-control"></textarea>
-            </div>
+        <div *ngIf ="tipo == '0'">
+            <div class="row">
+                <p><b>Codigos de barras para pagos presenciales</b></p>
+                <div class="col-sm-4 col-md-1">
+                    <label class="col-form-label">Cod barra 1:</label>
+                </div>
+                <div class="col-sm-8 col-md-5">
+                    <textarea cols="40" rows="10" class="form-control" formControlName="codBarras1Presencial"></textarea>
+                </div>
     
-            <div class="col-sm-4 col-md-1">
-                <label class="col-form-label">Cod barra 2:</label>
-            </div>
-            <div class="col-sm-8 col-md-5">
-                <textarea cols="40" rows="10" class="form-control"></textarea>
+                <div class="col-sm-4 col-md-1">
+                    <label class="col-form-label">Cod barra 2:</label>
+                </div>
+                <div class="col-sm-8 col-md-5">
+                    <textarea cols="40" rows="10" class="form-control" formControlName="codBarras2Presencial"></textarea>
+                </div>
             </div>
         </div>
+
+        <div *ngIf ="tipo == '1'">
+            <div class="row">
+                <p><b>Codigos de barras para pagos electrónicos</b></p>
+                <div class="col-sm-4 col-md-1">
+                    <label class="col-form-label">Cod barra 1:</label>
+                </div>
+                <div class="col-sm-8 col-md-5">
+                    <textarea cols="40" rows="10" class="form-control" formControlName="codBarras1Electronico"></textarea>
+                </div>
+        
+                <div class="col-sm-4 col-md-1">
+                    <label class="col-form-label">Cod barra 2:</label>
+                </div>
+                <div class="col-sm-8 col-md-5">
+                    <textarea cols="40" rows="10" class="form-control" formControlName="codBarras2Electronico"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf ="tipo == '2'">
+            <div class="row">
+                <p><b>Codigos de barras para pagos presenciales</b></p>
+                <div class="col-sm-4 col-md-1">
+                    <label class="col-form-label">Cod barra 1:</label>
+                </div>
+                <div class="col-sm-8 col-md-5">
+                    <textarea cols="40" rows="10" class="form-control" formControlName="codBarras1Presencial"></textarea>
+                </div>
+    
+                <div class="col-sm-4 col-md-1">
+                    <label class="col-form-label">Cod barra 2:</label>
+                </div>
+                <div class="col-sm-8 col-md-5">
+                    <textarea cols="40" rows="10" class="form-control" formControlName="codBarras2Presencial"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <p><b>Codigos de barras para pagos electrónicos</b></p>
+                <div class="col-sm-4 col-md-1">
+                    <label class="col-form-label">Cod barra 1:</label>
+                </div>
+                <div class="col-sm-8 col-md-5">
+                    <textarea cols="40" rows="10" class="form-control" formControlName="codBarras1Electronico"></textarea>
+                </div>
+        
+                <div class="col-sm-4 col-md-1">
+                    <label class="col-form-label">Cod barra 2:</label>
+                </div>
+                <div class="col-sm-8 col-md-5">
+                    <textarea cols="40" rows="10" class="form-control" formControlName="codBarras2Electronico"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+        
     
 
 
@@ -75,13 +137,19 @@
     <hr>
 
     <!-- Botones -->
-    <div class="row justify-content-center botones">
-        <button type="button" class="btn btn-primary">
-            <i class="fas fa-search"> </i> Generar XML
-        </button>
-        <button type="button" class="btn btn-primary">
-            <i class="fas fa-plus"> </i>
-            Verificar cantidad de registros cargados
-        </button>
-    </div>
+   
+        <div class="center botones" style="width: 33.33%;">
+            <button type="submit" [disabled]="bpcForm.invalid" class="btn btn-primary" (click)="obtenerXMLGeneradoBPC()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                  </svg> Generar XML
+            </button>
+        
+            <button type="button" class="btn btn-primary">
+                <i class="fas fa-plus"> </i>
+                Verificar cantidad de registros cargados
+            </button>
+        </div>
+    
 </form>
