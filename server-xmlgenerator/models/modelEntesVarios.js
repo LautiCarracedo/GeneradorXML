@@ -28,18 +28,27 @@ class ValoresInputEntesVarios{
 
 
     getArrayImportes(){
-       let arrayImportes = this.importes.split('\n')
-       return arrayImportes
+        let arrayImportes = this.importes.split('\n')
+        return arrayImportes
     }
  
     getArrayFechasPagos(){
-       let arrayPagos = this.fechasPagos.split('\n')
-       return arrayPagos
+        let arrayPagos = this.fechasPagos.split('\n')
+        return arrayPagos
     }  
 
     getArrayCantCuotas(){
-       let arrayCantCuotas = this.cantCuotas.split('\n')
-       return arrayCantCuotas
+        let arrayCantCuotas = this.cantCuotas.split('\n');
+        let arrayCantCuotasOK = [];
+        if (this.banco != "00935"){
+            for (let i = 0; i < arrayCantCuotas.length; i++){
+                arrayCantCuotasOK.push('1');
+            }
+        }
+        else{
+            arrayCantCuotasOK = arrayCantCuotas;
+        }
+       return arrayCantCuotasOK;
     }
 
     getArrayCuotasActuales(){
@@ -229,21 +238,31 @@ class InterfazIVAEntesVarios{
 
     splitCantCuotas(){
         let arrayCantCuotas = this.cantCuotas.split('\n');
-        return arrayCantCuotas
+        let arrayCantCuotasOK = [];
+        if (this.banco != "00935"){
+            for (let i = 0; i < arrayCantCuotas.length; i++){
+                arrayCantCuotasOK.push('1');
+            }
+        }
+        else{
+            arrayCantCuotasOK = arrayCantCuotas;
+        }
+       return arrayCantCuotasOK;
     }
 
-    calcIva(comisionCred, comisionDeb){
+    calcIva(){
         throw UnsupportedOperationException();
     }
 
-    calcComision(comisionCred, comisionDeb){
+    calcComision(){
         throw UnsupportedOperationException();
     }
 }
 
 
 class IVATagGeneral extends InterfazIVAEntesVarios{
-    calcComision(comisionCred, comisionDeb){
+    calcComision(){
+        //console.log(this.comisionCred, this.comisionDeb);
         //Suma de importes de comisión de cada detalle de pago.
         let arrayImportes = this.splitImportes();
         let arrayCantCuotas = this.splitCantCuotas();
@@ -251,29 +270,37 @@ class IVATagGeneral extends InterfazIVAEntesVarios{
         let comisionPorImportes = 0;
         for (let i = 0; i < arrayImportes.length; i++) {
             if (arrayCantCuotas[i] === "C"){
-                comisionPorImportes = arrayImportes[i] * (comisionCred / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
             }
             else if (arrayCantCuotas[i] === "D"){
-                comisionPorImportes = arrayImportes[i] * (comisionDeb / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
+            }
+            else{
+                if (this.comisionCred != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
+                }
+                else if (this.comisionDeb != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
+                }
             }
             totalComision += comisionPorImportes;
         }
-        return totalComision;
+        return totalComision.toFixed(2);
 
     }
 
-    calcIva(comisionCred, comisionDeb){
+    calcIva(){
         //Total importe comisión (del tag general) * 0.21
         let totalComisionTagGeneral = this.calcComision();
         let ivaTagGeneral = totalComisionTagGeneral * 0.21;
 
-        return ivaTagGeneral;
+        return ivaTagGeneral.toFixed(2);
 
     }
 }
 
 class IVATagSucursalYPagos extends InterfazIVAEntesVarios{
-    calcComision(comisionCred, comisionDeb){
+    calcComision(){
         //Suma de importes de comisión de cada detalle de pago. En este caso solo hacemos para cordobesa (comision = 0.01 o 1%)
         let arrayImportes = this.splitImportes();
         let arrayCantCuotas = this.splitCantCuotas();
@@ -281,18 +308,26 @@ class IVATagSucursalYPagos extends InterfazIVAEntesVarios{
         let comisionPorImportes = 0;
         for (let i = 0; i < arrayImportes.length; i++) {
             if (arrayCantCuotas[i] === "C"){
-                comisionPorImportes = arrayImportes[i] * (comisionCred / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
             }
             else if (arrayCantCuotas[i] === "D"){
-                comisionPorImportes = arrayImportes[i] * (comisionDeb / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
+            }
+            else{
+                if (this.comisionCred != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
+                }
+                else if (this.comisionDeb != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
+                }
             }
             totalComision += comisionPorImportes;
         }
 
-        return totalComision;
+        return totalComision.toFixed(2);
     }
 
-    calcIva(comisionCred, comisionDeb){
+    calcIva(){
         //Suma de importes IVA de cada detalle de pago.
         let arrayImportes = this.splitImportes();
         let arrayCantCuotas = this.splitCantCuotas();
@@ -301,20 +336,29 @@ class IVATagSucursalYPagos extends InterfazIVAEntesVarios{
         let ivaPorImportes = 0;
         for (let i = 0; i < arrayImportes.length; i++) {
             if (arrayCantCuotas[i] === "C"){
-                comisionPorImportes = arrayImportes[i] * (comisionCred / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
             }
             else if (arrayCantCuotas[i] === "D"){
-                comisionPorImportes = arrayImportes[i] * (comisionDeb / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
+            }
+            else{
+                if (this.comisionCred != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
+                }
+                else if (this.comisionDeb != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
+                }
             }
             ivaPorImportes += comisionPorImportes * 0.21;
             ivaTagSucursalYPagos = ivaPorImportes;
         }
-        return ivaTagSucursalYPagos;
+        return ivaTagSucursalYPagos.toFixed(2);
     }
 }
 
 class IVATagDetallePago extends InterfazIVAEntesVarios{
-    calcComision(comisionCred, comisionDeb){
+    calcComision(){
+        console.log(this.comisionCred, this.comisionDeb);
         //Suma de importes de comisión de cada detalle de pago.
         let arrayImportes = this.splitImportes();
         let arrayCantCuotas = this.splitCantCuotas();
@@ -322,16 +366,26 @@ class IVATagDetallePago extends InterfazIVAEntesVarios{
         let comisionPorImportes = 0;
         for (let i = 0; i < arrayImportes.length; i++) {
             if (arrayCantCuotas[i] === "C"){
-                comisionPorImportes = arrayImportes[i] * (comisionCred / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
             }
             else if (arrayCantCuotas[i] === "D"){
-                comisionPorImportes = arrayImportes[i] * (comisionDeb / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
             }
-            arrayComisiones.push(comisionPorImportes);
+            else{
+                if (this.comisionCred != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
+                }
+                else if (this.comisionDeb != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
+                }
+            }
+            arrayComisiones.push(comisionPorImportes.toFixed(2));
+            
         }
+        return arrayComisiones;
     }
 
-    calcIva(comisionCred, comisionDeb){
+    calcIva(){
         //Suma de importes IVA de cada detalle de pago.
         let arrayImportes = this.splitImportes();
         let arrayCantCuotas = this.splitCantCuotas();
@@ -340,13 +394,21 @@ class IVATagDetallePago extends InterfazIVAEntesVarios{
         let comisionPorImportes = 0;
         for (let i = 0; i < arrayImportes.length; i++) {
             if (arrayCantCuotas[i] === "C"){
-                comisionPorImportes = arrayImportes[i] * (comisionCred / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
             }
             else if (arrayCantCuotas[i] === "D"){
-                comisionPorImportes = arrayImportes[i] * (comisionDeb / 100);
+                comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
+            }
+            else{
+                if (this.comisionCred != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionCred / 100);
+                }
+                else if (this.comisionDeb != ""){
+                    comisionPorImportes = arrayImportes[i] * (this.comisionDeb / 100);
+                }
             }
             ivaPorImportes = comisionPorImportes * 0.21;
-            arrayIVAs.push(ivaPorImportes);
+            arrayIVAs.push(ivaPorImportes.toFixed(2));
         }
         return arrayIVAs;
     }

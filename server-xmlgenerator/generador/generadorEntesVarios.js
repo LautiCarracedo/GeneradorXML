@@ -75,6 +75,9 @@ class GeneradorEntesVarios{
         let arrayComisiones = calculosIVAYComisionTagDP.calcComision();
         let arrayIVAs = calculosIVAYComisionTagDP.calcIva();
 
+        console.log('arrayCom', arrayComisiones);
+        console.log('comisiontagsucpag', comisionTagSucursalYPagos);
+
         
         return [nroBanco, nroTransaccion, nroRendicion, fechaDeRendicion, cbuOrigen, cuitOrigen, cbuDestino, cuitDestino,
                 cantRegistros, totalImpDeterminadoPagado, totalImpRecaudadoYDepositadoYADepositar, comisionTagGeneral,

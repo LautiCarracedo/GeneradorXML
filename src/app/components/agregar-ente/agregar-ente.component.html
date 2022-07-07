@@ -3,7 +3,7 @@
 </div>
 
 <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
-<form>
+<form [formGroup]="addEnteForm" (ngSubmit)="agregarEnte()">
     <div>
         <div class="container-fluid">
             <div class="row">
@@ -11,7 +11,7 @@
                     <label class="col-form-label">Origen:</label>
                 </div>
                 <div class="col-sm-8 col-md-2">
-                    <select class="form-control">
+                    <select class="form-control" formControlName="origen">
                         <option>PSRM</option>
                         <option>OTAX</option>
                         <option>GANT</option>
@@ -26,14 +26,14 @@
                     <label class="col-form-label" for="nroBanco">Banco (numero):</label>
                 </div>
                 <div class="col-sm-8 col-md-2">
-                    <input id="nroBanco" type="text" class="form-control" maxlength="55" />
+                    <input id="nroBanco" type="text" class="form-control" maxlength="55" formControlName="nroBanco"/>
                 </div>
 
                 <div class="col-sm-4 col-md-2">
                     <label class="col-form-label" for="nroBanco">Banco (nombre):</label>
                 </div>
                 <div class="col-sm-8 col-md-2">
-                    <input id="nroBanco" type="text" class="form-control" maxlength="55" />
+                    <input id="nroBanco" type="text" class="form-control" maxlength="55" formControlName="nombreBanco"/>
                 </div>
 
             </div>
@@ -42,250 +42,97 @@
 
             <div class="row">
                 <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="nroBanco">Comisión:</label>
+                    <label class="col-form-label" for="nroBanco">Comisión débito:</label>
                 </div>
                 <div class="col-sm-8 col-md-2">
-                    <input id="nroBanco" type="text" class="form-control" maxlength="55" />
+                    <input id="nroBanco" type="text" class="form-control" maxlength="55"formControlName="comisionDeb" />
+                </div>
+
+                <div class="col-sm-4 col-md-2">
+                    <label class="col-form-label" for="nroBanco">Comisión crédito:</label>
+                </div>
+                <div class="col-sm-8 col-md-2">
+                    <input id="nroBanco" type="text" class="form-control" maxlength="55" formControlName="comisionCred"/>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-4 col-md-2">
+                    <label class="col-form-label" for="nroBanco">Lote:</label>
+                </div>
+                <div class="col-sm-8 col-md-2">
+                    <input id="nroBanco" type="text" class="form-control" maxlength="55" formControlName="lote"/>
+                </div>
+
+                <div class="col-sm-4 col-md-2">
+                    <label class="col-form-label" for="nroBanco">Nro de comercio:</label>
+                </div>
+                <div class="col-sm-8 col-md-2">
+                    <input id="nroBanco" type="text" class="form-control" maxlength="55" formControlName="nroComercio"/>
                 </div>
             </div>
 
 
         </div>
-        
+
         <hr>
+        
+        <h6>Seleccionar los campos que desea generar en cada cabecera en el archivo XML final</h6>
 
-        <div>
+        <div class="columna">
             <h6>Cabecera General</h6>
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                
-
-                
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
+            <div class="form-check col-sm-8 col-md-8" *ngFor="let valor of camposTagGeneral">
+                <input class="form-check-input" type="checkbox" name="{{ valor.campo }}" (change)="onchange()" [(ngModel)]="valor.seleccionado" formControlName="tagGeneral">
+                <label class="form-check-label" for="inlineCheckbox">
+                    {{ valor.campo }}
+                </label>
             </div>
         </div>
 
-
-        <div>
-            <h6>Cabecera Pagos</h6>
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                
-
-                
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-            </div>
-        </div>
-
-
-
-        <div>
+        <div class="columna">
             <h6>Cabecera Sucursal</h6>
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                
-
-                
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
+            <div class="form-check col-sm-8 col-md-8" *ngFor="let valor of camposTagSucursal">
+                <input class="form-check-input" type="checkbox" name="{{ valor.campo }}" (change)="onchange()" [(ngModel)]="valor.seleccionado" formControlName="tagSucursal">
+                <label class="form-check-label" for="inlineCheckbox">
+                    {{ valor.campo }}
+                </label>
             </div>
         </div>
 
+        <div class="columna">
+            <h6>Cabecera Pagos</h6>
+            <div class="form-check col-sm-8 col-md-8" *ngFor="let valor of camposTagPagos">
+                <input class="form-check-input" type="checkbox" name="{{ valor.campo }}" (change)="onchange()" [(ngModel)]="valor.seleccionado" formControlName="tagPagos">
+                <label class="form-check-label" for="inlineCheckbox">
+                    {{ valor.campo }}
+                </label>
+            </div>
+        </div>
 
-        <div>
+        <div class="columna">
             <h6>Cabecera Detalle Pago</h6>
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                
-
-                
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="clave1tagGeneral">Clave:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="clave1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
-
-                <div class="col-sm-4 col-md-2">
-                    <label class="col-form-label" for="valor1tagGeneral">Valor:</label>
-                </div>
-                <div class="col-sm-8 col-md-2">
-                    <input id="valor1tagGeneral" type="text" class="form-control" maxlength="55" />
-                </div>
+            <div class="form-check col-sm-8 col-md-8" *ngFor="let valor of camposTagDP">
+                <input class="form-check-input" type="checkbox" name="{{ valor.campo }}" (change)="onchange()" [(ngModel)]="valor.seleccionado" formControlName="tagDP">
+                <label class="form-check-label" for="inlineCheckbox">
+                    {{ valor.campo }}
+                </label>
             </div>
         </div>
 
 
-        <div>
-            <!-- Botones -->
-            <div class="row justify-content-center botones">
-                <button type="button" class="btn btn-primary">
-                    <i class="fas fa-add"> </i> Agregar ente
-                </button>
-            </div>
-        </div>
+        <br>
+
     </div>
+
+    
+    <!-- Botones -->
+    <div class="justify-content-center botones">
+        <button type="submit" class="btn btn-primary" (click)="agregarEnte">
+            <i class="fas fa-add"> </i> Agregar ente
+        </button>
+    </div>
+    
+
 </form>

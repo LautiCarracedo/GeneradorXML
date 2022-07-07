@@ -8,8 +8,8 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/bpc', require('./routes/bpc'))
-app.use('/entesVarios', require('./routes/entesVarios'))
-app.use('/updateEntes', require('./routes/updateEntes'))
+app.use('/otros-entes', require('./routes/entesVarios'))
+app.use('/agregar-entes', require('./routes/updateEntes'))
 
 //instancia de app, para que escuche en el puerto
 app.listen(3000, () => {

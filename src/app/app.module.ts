@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UpdateBPCComponent } from './components/update-bpc/update-bpc.component'
 import { DownloadService } from './services/download.service';
 import { UpdateValoresBpcComponent } from './components/update-valores-bpc/update-valores-bpc.component';
+import { HomeAbmEntesComponent } from './components/home-abm-entes/home-abm-entes.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { UpdateValoresBpcComponent } from './components/update-valores-bpc/updat
     OtrosEntesComponent,
     AgregarEnteComponent,
     UpdateBPCComponent,
-    UpdateValoresBpcComponent
+    UpdateValoresBpcComponent,
+    HomeAbmEntesComponent
   ],
   imports: [
     BrowserModule,

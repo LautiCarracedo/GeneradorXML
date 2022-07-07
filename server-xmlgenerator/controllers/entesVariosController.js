@@ -11,7 +11,7 @@ const entes = JSON.parse(jsonEntes);
 
 exports.updateEntes = (req, res) => {
     try {
-        const {origen, nroEnte, nombreEnte, comisionDebito, comisionCredito, tagGeneral, tagSucursal, tagPagos, tagDetallePago} = req.body
+        const {origen, nroEnte, nombreEnte, comisionDebito, comisionCredito, lote, nroComercio, tagGeneral, tagSucursal, tagPagos, tagDetallePago} = req.body
         
         let objectEnte = {
             origen: origen,
@@ -19,6 +19,8 @@ exports.updateEntes = (req, res) => {
             nombreEnte: nombreEnte,
             comisionDebito: comisionDebito,
             comisionCredito: comisionCredito,
+            lote: lote,
+            nroComercio: nroComercio,
             tagGeneral: tagGeneral,
             tagSucursal: tagSucursal,
             tagPagos: tagPagos,
@@ -26,11 +28,14 @@ exports.updateEntes = (req, res) => {
         }
 
         entes.push(objectEnte);
-        console.log(entes);
+        //console.log(entes);
 
         //toma un json
         const jsonEntes = JSON.stringify(entes);
         fs.writeFileSync('configuration/entesUpdate.json', jsonEntes, 'utf-8');
+
+        res.send('OK!');
+
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');
@@ -53,6 +58,7 @@ exports.crearXMLEnte = (req, res) => {
 
         const [ente, comisionCred, comisionDeb, nroDeComercio, nroLote] = valoresEnte.definirBancoInput(banco);
 
+        console.log(ente, comisionCred, comisionDeb, nroDeComercio, nroLote);
         
 
         const [arrayTagGeneralAGenerar, arrayTagSucursalAGenerar, arrayTagPagosAGenerar, arrayTagDetallePagoAGenerar] = 
@@ -85,8 +91,8 @@ exports.crearXMLEnte = (req, res) => {
         let arrayDatosTagDetallePago = [];
         let arrayDatosXCadaDetallePago = [];
 
-        console.log('ente', ente);
-        console.log('nro',nroComercio);
+        //console.log('ente', ente);
+        //console.log('nro',nroComercio);
         for(let i = 0; i < cantRegistros; i++){
             arrayDatosTagDetallePago = [codRegistroDP, i + 1, i + 1, marcaMovimiento, tipoOperacion, tipoRendicion,
                                         moneda, arrayBoletas[i], arrayBoletas[i], inputFechasPagos[i], arrayImportes[i],
@@ -95,7 +101,6 @@ exports.crearXMLEnte = (req, res) => {
 
             
             arrayDatosXCadaDetallePago.push(arrayDatosTagDetallePago);
-            console.log(arrayDatosXCadaDetallePago.length);
         }
 
         

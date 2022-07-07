@@ -1,104 +1,194 @@
 <div class='tituloPagina'>
-    Generación de XML para Otros Entes
-  </div>
-  
-  <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
-  <form [formGroup]="formOtrosEntes">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-4 col-md-2">
-            <label class="col-form-label">Origen:</label>
-          </div>
-          <div class="col-sm-8 col-md-2">
-              <select class="form-control">
-                  <option>PSRM</option>
-                  <option>OTAX</option>
-                  <option>GANT</option>        
-              </select>
-          </div>        
+  Generación de XML para Otros Entes
+</div>
+
+<!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
+<form [formGroup]="formOtrosEntes" (ngSubmit)="obtenerXMLGeneradoEntes()">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4 col-md-2">
+        <label class="col-form-label">Origen:</label>
+      </div>
+      <div class="col-sm-8 col-md-2">
+        <select class="form-select" formControlName="origen">
+          <option>PSRM</option>
+          <option>OTAX</option>
+          <option>GANT</option>
+        </select>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-sm-4 col-md-2">
+        <label class="col-form-label">Nro banco:</label>
+      </div>
+      <div class="col-sm-8 col-md-2">
+        <select [(ngModel)]="tipo" class="form-select" formControlName="banco">
+          <option>00935</option>
+          <option>00216</option>
+          <option>00202</option>
+          <option>00082</option>
+          <option>00079</option>
+        </select>
+
       </div>
 
-      <hr>
+      <div>{{tipo | json}}</div>
 
-      <div class="row">
-        <div class="col-sm-4 col-md-2">
-            <label class="col-form-label" for="nroBanco">Banco:</label>
-          </div>
-          <div class="col-sm-8 col-md-2">
-            <input id="nroBanco" type="text" class="form-control" maxlength="55"/>
-        </div>
 
-        <div class="col-sm-4 col-md-2">
-            <label class="col-form-label">Comisión:</label>
-          </div>
-          <div class="col-sm-8 col-md-2">
-              <select class="form-control">
-                  <option>Por defecto</option>
-                  <option>Credito</option>
-                  <option>Debito</option>        
-              </select>
-          </div>
-
-        <div class="col-sm-4 col-md-2">
-          <label class="col-form-label">Fecha de rendición:</label>
-        </div>
-        <div class="col-sm-8 col-md-2">
-          <input type="text" class="form-control" maxlength="55" id="fechaRendicion"/>
-        </div>
+      <div class="col-sm-4 col-md-2">
+        <label class="col-form-label">Comisión:</label>
+      </div>
+      <div class="col-sm-8 col-md-2">
+        <select class="form-select" formControlName="comision">
+          <option>Por defecto</option>
+          <option>Credito</option>
+          <option>Debito</option>
+          <option>Credito y Débito</option>
+        </select>
       </div>
 
-    
-      <hr>
+      <div class="col-sm-4 col-md-2">
+        <label class="col-form-label">Fecha de rendición:</label>
+      </div>
+      <div class="col-sm-8 col-md-2">
+        <input type="text" class="form-control" maxlength="55" id="fechaRendicion" formControlName="fechaRendicion" />
+      </div>
+    </div>
 
+
+    <hr>
+
+    <div *ngIf="tipo == '00935'">
       <div class="row">
         <div class="col-sm-4 col-md-1">
           <label class="col-form-label">Boletas:</label>
         </div>
         <div class="col-sm-8 col-md-2">
-            <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+          <textarea cols="40" rows="10" class="form-control" formControlName="boletas"></textarea>
         </div>
 
         <div class="col-sm-4 col-md-1">
           <label class="col-form-label">Importes:</label>
         </div>
         <div class="col-sm-8 col-md-1">
-            <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+          <textarea cols="40" rows="10" class="form-control" formControlName="importes"></textarea>
         </div>
 
         <div class="col-sm-4 col-md-1">
-            <label class="col-form-label">Pagos:</label>
+          <label class="col-form-label">Fec Pagos:</label>
         </div>
         <div class="col-sm-8 col-md-2">
-            <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+          <textarea cols="40" rows="10" class="form-control" formControlName="fechasPagos"></textarea>
         </div>
 
         <div class="col-sm-4 col-md-1">
-            <label class="col-form-label">Cant cuotas:</label>
+          <label class="col-form-label">Cant cuotas:</label>
         </div>
         <div class="col-sm-8 col-md-1">
-              <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+          <textarea cols="40" rows="10" class="form-control" formControlName="cantCuotas"></textarea>
         </div>
 
         <div class="col-sm-4 col-md-1">
-            <label class="col-form-label">Cuota actual:</label>
+          <label class="col-form-label">Cuota actual:</label>
         </div>
         <div class="col-sm-8 col-md-1">
-              <textarea cols="40" rows="10" class="form-control" maxlength="55"></textarea>
+          <textarea cols="40" rows="10" class="form-control" formControlName="cuotaActuales"></textarea>
         </div>
-
-      </div>
-
-    <hr>
-  
-      <!-- Botones -->
-      <div class="row justify-content-center botones">
-        <button type="button" class="btn btn-primary" (click)="generarXML()">
-              <i class="fas fa-search"> </i> Generar XML
-          </button>
-        <button type="button" class="btn btn-primary">
-              <i class="fas fa-plus"> </i> 
-              Verificar cantidad de registros cargados
-          </button>
       </div>
     </div>
-  </form>
+
+
+    <div *ngIf="tipo == '00216' || tipo == '00202'">
+      <div class="row">
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Boletas:</label>
+        </div>
+        <div class="col-sm-8 col-md-2">
+          <textarea cols="40" rows="10" class="form-control" formControlName="boletas"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Importes:</label>
+        </div>
+        <div class="col-sm-8 col-md-1">
+          <textarea cols="40" rows="10" class="form-control" formControlName="importes"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Fec Pagos:</label>
+        </div>
+        <div class="col-sm-8 col-md-2">
+          <textarea cols="40" rows="10" class="form-control" formControlName="fechasPagos"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Cant cuotas:</label>
+        </div>
+        <div class="col-sm-8 col-md-1">
+          <textarea cols="40" rows="10" class="form-control" formControlName="cantCuotas"></textarea>
+        </div>
+      </div>
+    </div>
+    
+
+
+    <div *ngIf="tipo == '00082' || tipo == '00079'">
+      <div class="row">
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Cod barra 1:</label>
+        </div>
+        <div class="col-sm-8 col-md-4">
+          <textarea cols="40" rows="10" class="form-control" formControlName="codBarras1"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Cod barra 2 :</label>
+        </div>
+        <div class="col-sm-8 col-md-4">
+          <textarea cols="40" rows="10" class="form-control"  formControlName="codBarras2"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Fec Pagos:</label>
+        </div>
+        <div class="col-sm-8 col-md-2">
+          <textarea cols="40" rows="10" class="form-control"  formControlName="fechasPagos"></textarea>
+        </div>
+
+        <div class="col-sm-4 col-md-1">
+          <label class="col-form-label">Cant cuotas:</label>
+        </div>
+        <div class="col-sm-8 col-md-1">
+          <textarea cols="40" rows="10" class="form-control" formControlName="cantCuotas"></textarea>
+        </div>
+
+
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <hr>
+
+    <!-- Botones -->
+    <div class="row justify-content-center botones">
+      <button type="submit" class="btn btn-primary" (click)="obtenerXMLGeneradoEntes">
+        <i class="fas fa-search"> </i> Generar XML
+      </button>
+      <button type="button" class="btn btn-primary">
+        <i class="fas fa-plus"> </i>
+        Verificar cantidad de registros cargados
+      </button>
+    </div>
+  
+  </div>
+
+</form>

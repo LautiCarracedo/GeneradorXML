@@ -1,0 +1,13 @@
+.columna {
+    width:25%;
+    float:left;
+}
+
+@media (max-width: 500px) {
+  
+    .columna {
+      width:auto;
+      float:none;
+    }
+    
+}

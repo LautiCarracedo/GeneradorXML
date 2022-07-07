@@ -7,7 +7,7 @@ const leerJSONEntesVarios = () => {
     let arrayEntes = JSON.parse(rawdata);
     let camposRef = JSON.parse(rawdataRef);
 
-    console.log(arrayEntes);
+    //console.log(arrayEntes);
 
     return [camposRef, arrayEntes];
 }
@@ -23,6 +23,7 @@ const definirBancoInput = (ente) => {
 
     for(let i = 0; i < arrayEntes.length; i++){
         if (arrayEntes[i].nroEnte === ente){
+            //console.log('ente', arrayEntes[i])
             banco = arrayEntes[i].nroEnte;
             comisionCred = arrayEntes[i].comisionCredito;
             comisionDeb = arrayEntes[i].comisionDebito;
@@ -31,6 +32,8 @@ const definirBancoInput = (ente) => {
             break;
         }
     }
+
+    //console.log(banco, comisionCred, comisionDeb, nroComercio, lote);
 
     return [banco, comisionCred, comisionDeb, nroComercio, lote];
 }
@@ -129,7 +132,7 @@ const definirFormatoXML = (origen, ente) => {
         }
     }
     
-    console.log(arrayTagGeneralAGenerar);
+    //console.log(arrayTagGeneralAGenerar);
     return [arrayTagGeneralAGenerar, arrayTagSucursalAGenerar, arrayTagPagosAGenerar, arrayTagDetallePagoAGenerar]
 
 }

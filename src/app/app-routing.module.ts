@@ -7,6 +7,7 @@ import { OtrosEntesComponent } from './components/otros-entes/otros-entes.compon
 import { AgregarEnteComponent } from './components/agregar-ente/agregar-ente.component';
 import { UpdateBPCComponent } from './components/update-bpc/update-bpc.component';
 import { UpdateValoresBpcComponent } from './components/update-valores-bpc/update-valores-bpc.component';
+import { HomeAbmEntesComponent } from './components/home-abm-entes/home-abm-entes.component';
 
 const routes: Routes = [
   { path:'', component: HomeComponent },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path:'otros-entes', component: OtrosEntesComponent },
   { path:'agregar-entes', component: AgregarEnteComponent },
   { path:'update-bpc', component: UpdateBPCComponent },
-  { path:'update-valores-bpc/:origen/:campo', component: UpdateValoresBpcComponent }
+  { path:'home-abm-entes', component: HomeAbmEntesComponent },
+  { path:'update-valores-bpc/:origen/:campo', component: UpdateValoresBpcComponent },
 ];
 
 
