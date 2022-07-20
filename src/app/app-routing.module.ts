@@ -17,6 +17,7 @@ const routes: Routes = [
   { path:'update-bpc', component: UpdateBPCComponent },
   { path:'home-abm-entes', component: HomeAbmEntesComponent },
   { path:'update-valores-bpc/:origen/:campo', component: UpdateValoresBpcComponent },
+  { path:'agregar-entes/:origen/:nroEnte', component: AgregarEnteComponent },
 ];
 
 

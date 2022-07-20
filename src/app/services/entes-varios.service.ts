@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AddEntes } from '../models/add-entes';
@@ -20,5 +20,25 @@ export class EntesVariosService {
 
   guardarEnte(enteAAgregar: AddEntes): Observable<any> {
     return this.http.post(this.urlAddEntes, enteAAgregar, { responseType: 'text' });
+  }
+
+  getEntesCargados():Observable<any> {
+    return this.http.get(this.url);
+  }
+
+  editarEnteCargado(origen: string, nroEnte: string, valores: AddEntes): Observable<any>{
+    return this.http.put(this.urlAddEntes + '/' + origen + '/' + nroEnte, valores, { responseType: 'text' });
+  }
+
+  getEnteSeleccionado(origen: string | null, nroEnte: string | null): Observable<any> {
+    let params = new HttpParams();
+    if (origen != null) {
+      params = params.append('Origen', origen);
+    }
+    if (nroEnte != null) {
+      params = params.append('Nro Ente', nroEnte);
+    }
+
+    return this.http.get(this.urlAddEntes + '/' + origen + '/' + nroEnte);
   }
 }

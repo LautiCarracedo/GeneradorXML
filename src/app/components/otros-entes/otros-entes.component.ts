@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OtrosEntes } from 'src/app/models/otros-entes';
-import { ValoresInput } from 'src/app/models/valores-input';
 import { EntesVariosService } from 'src/app/services/entes-varios.service';
 
 @Component({
