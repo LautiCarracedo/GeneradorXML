@@ -9,6 +9,39 @@ const valoresEnte = require('../controllers/entesVariosValues.js');
 const jsonEntes = fs.readFileSync('configuration/entesUpdate.json','utf-8')
 const entes = JSON.parse(jsonEntes);
 
+exports.obtenerEntesCargados = (req, res) => {
+    try {
+        const jsonEntes = entes;
+        res.json(jsonEntes);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+        
+    }
+}
+
+exports.obtenerEnteSeleccionado = (req, res) => {
+    try {
+        let nroEnteAModif = req.params.nroEnte;
+        let origenDelEnte = req.params.origen;
+
+        for (let i = 0; i < entes.length; i++) {
+            if (entes[i].origen === origenDelEnte) {
+                if (entes[i].nroEnte === nroEnteAModif) {
+                  const jsonEntes = entes[i];
+                  res.json(jsonEntes);
+                  break;
+                }
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+        
+    }
+}
+
 exports.updateEntes = (req, res) => {
     try {
         const {origen, nroEnte, nombreEnte, comisionDebito, comisionCredito, lote, nroComercio, tagGeneral, tagSucursal, tagPagos, tagDetallePago} = req.body
