@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 import { AddEntes } from '../models/add-entes';
 import { OtrosEntes } from '../models/otros-entes';
 
@@ -9,8 +10,10 @@ import { OtrosEntes } from '../models/otros-entes';
 })
 export class EntesVariosService {
 
-  url = 'http://localhost:3000/otros-entes';
-  urlAddEntes = 'http://localhost:3000/agregar-entes';
+  //url = 'http://localhost:3000/otros-entes';
+  url = environment.ConexionWebApiProxy + 'otros-entes';
+  //urlAddEntes = 'http://localhost:3000/agregar-entes';
+  urlAddEntes = environment.ConexionWebApiProxy + 'agregar-entes';
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 import { BpcIndices } from '../models/bpc-indices';
 import { BpcInput } from '../models/bpc-input';
 import { BpcUpdate } from '../models/bpc-update';
@@ -9,7 +10,8 @@ import { BpcUpdate } from '../models/bpc-update';
   providedIn: 'root'
 })
 export class BPCServiceService {
-  url = 'http://localhost:3000/bpc';
+  //url = 'http://localhost:3000/bpc';
+  url = environment.ConexionWebApiProxy + 'bpc';
 
   constructor(private http: HttpClient) { }
 
