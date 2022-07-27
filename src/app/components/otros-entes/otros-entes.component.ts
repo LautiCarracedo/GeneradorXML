@@ -12,6 +12,7 @@ export class OtrosEntesComponent implements OnInit {
   
   formOtrosEntes: FormGroup;
   tipo: string = "";
+  entes: OtrosEntes[] = [];
 
   constructor(private fb: FormBuilder,
               private _entesService: EntesVariosService) {
@@ -32,7 +33,18 @@ export class OtrosEntesComponent implements OnInit {
   //a = document.getElementById('nroBanco');
 
   ngOnInit(): void {
-  } 
+    this.obtenerEntesGuardados();
+  }
+
+  obtenerEntesGuardados(){
+    this._entesService.getEntesCargados().subscribe((data: OtrosEntes[]) => {
+      this.entes = data;
+      console.log(data);
+    }, error => {
+      console.log(error);
+      alert("Hubo un inconveniente: " + error.message);
+    })
+  }
 
   obtenerXMLGeneradoEntes(){
     //let formatoXML = this.obtenerFormatoXMLOK();
