@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OtrosEntes } from 'src/app/models/otros-entes';
 import { EntesVariosService } from 'src/app/services/entes-varios.service';
@@ -12,7 +12,9 @@ export class OtrosEntesComponent implements OnInit {
   
   formOtrosEntes: FormGroup;
   tipo: string = "";
+  origen: string = "";
   entes: OtrosEntes[] = [];
+  //@Input('origen') value: string;
 
   constructor(private fb: FormBuilder,
               private _entesService: EntesVariosService) {
@@ -33,13 +35,35 @@ export class OtrosEntesComponent implements OnInit {
   //a = document.getElementById('nroBanco');
 
   ngOnInit(): void {
-    this.obtenerEntesGuardados();
+    this.formOtrosEntes = this.fb.group({
+      origen:['',Validators.required],
+      banco: ['', Validators.required],
+      fechaRendicion: ['',Validators.required],
+      comision: ['',Validators.required],
+      boletas: ['',Validators.required],
+      importes: ['',Validators.required],
+      fechasPagos: ['',Validators.required],
+      cantCuotas: ['',Validators.required],
+      cuotaActuales: ['',Validators.required],
+      codBarras1: ['',Validators.required],
+      codBarras2: ['',Validators.required],
+    })
+    
+    //console.log(this.formOtrosEntes.get('origen')?.value);
+    
   }
 
-  obtenerEntesGuardados(){
+  getOrigen(origen : string | any){
+    console.log(origen);    
+    return origen;
+  }
+  
+
+  obtenerEntesGuardados(origen : string | any){
     this._entesService.getEntesCargados().subscribe((data: OtrosEntes[]) => {
-      this.entes = data;
-      console.log(data);
+      let dataOrigenSeleccioando = data.filter(dato => dato.origen == origen);
+      this.entes = dataOrigenSeleccioando;
+      console.log(dataOrigenSeleccioando);
     }, error => {
       console.log(error);
       alert("Hubo un inconveniente: " + error.message);

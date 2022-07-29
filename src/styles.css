@@ -1,66 +1,36 @@
 body {
     background-color: rgb(241, 243, 247);
+    font-family:Georgia,serif;
   }
   
   .divBody {
     background-color: white;
     min-height: 84vh;
     padding: 1rem;
+    font-family:Georgia,serif;
   }
   
   /* pie de la pagina */
   footer {
     padding: 1rem;
-  }
-  /* 
-  
-  h3 {
-    color: white;
-    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-    border-bottom-style: solid;
-    border-color: gray;
-    border-bottom-width: thin;
-    padding-bottom: 0.3em;
-    margin-bottom: 0.5em;
-  } */
-  
+    font-family:Georgia,serif;
+  }  
+
   .tituloPagina {
+    display: flex;
+    justify-content: center;
     font-size: 1.75rem;
-    font-weight: 500;
-    color: white;
-    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-    border-bottom-style: solid;
-    border-color: gray;
-    border-bottom-width: thin;
-    padding-bottom: 0.1em;
-    margin-bottom: 0.5em;
+    font-weight: 300;
+    font-family:Georgia,serif;
+    text-shadow: 1px 1px 2px;
+    color: black;
+    font-size:30px;
+    line-height:1em;
+    margin:0 0 0 60px;
+
   }
   
-  .subtitulo {
-    background-color: #afb4bd;
-    color: white;
-    border-radius: 5px 5px 0px 0px;
-    font-style: italic;
-    font-weight: 500;
-    padding: 0.3em 0 0.3em 1em;
-    margin: 0.8em 0em 0.5em 0em;
-    /* font-weight: bold; */
-    background-image: linear-gradient(
-      to right,
-      rgba(175, 18, 189, 1),
-      rgba(175, 180, 220, 0.5)
-    );
-  }
-  
-  .subtituloTabla {
-    /* usar class="subtitulo subtituloTabla" */
-    margin-bottom: 0px; /* para que se pegue a la tabla */
-  }
-  .subtitulo i.fas {
-    /* separar icono del texto en los subtitulos */
-    margin-right: 1em;
-  }
-  
+ 
   /* todos los formularios */
   form {
     background-color: rgb(237, 242, 252);
@@ -70,7 +40,7 @@ body {
     border-width: thin;
     margin: 0em 0.5rem 1rem 0.5rem;
     padding: 0.5rem;
-    box-shadow: 0.62rem 0.62rem 0.31rem rgb(216, 194, 183);
+    font-family:Georgia,serif;
   }
   
   /* espacio en los botones contenidos en un div con esta clase */
@@ -80,46 +50,18 @@ body {
   
   /* todos los labels menos los de los radio y check */
   label:not([class^='custom-control']) {
+    font-weight:bold;
+    font-family:Georgia,serif;
     background-color: #d7dfe7;
     border-radius: 0.625em 0.2em 0rem 0.625em;
-    border-bottom: solid;
+    border-bottom:#495057;
     margin-right: -0.9em; /* para que columna label este cerca del input*/
     padding-left: 0.5em;
     display: block;
     height: 90%;
   }
   
-  /*<=576*/
-  @media only screen and (max-width: 575px) {
-    label:not([class^='custom-control']) {
-      margin-right: 0em;
-      margin-top: 0.3rem; /* para separar grupo label/input */
-    }
-  }
   
-  /*>=576*/
-  @media only screen and (min-width: 576px) {
-    .inputMedio {
-      width: 12em;
-    }
-    .inputChico {
-      width: 7em;
-    }
-  }
-  
-  .pyBadge {
-    background-color: #6c757d;
-    color: white;
-    /* font-size: 1.1em; */
-    display: inline-block;
-    padding: 0.35em 0.4em;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25rem;
-  }
   
   /* mensajes de validacion */
   .validacion {
@@ -128,6 +70,7 @@ body {
     font-style: italic;
     padding-left: 1em;
     padding-bottom: 0.5em;
+    font-family:Georgia,serif;
   }
   
   /* mensajes de alerta al buscar y grabar */
@@ -139,6 +82,7 @@ body {
   
   ::placeholder {
     text-transform: none;
+    font-family:Georgia,serif;
   }
   
   /* encabezados de tablas */
@@ -147,4 +91,7 @@ body {
     color: #495057;
     background-color: #aeb7d7; /* #e9ecef; */
     border-color: #dee2e6;
+    font-family:Georgia,serif;
+    
   }
+
