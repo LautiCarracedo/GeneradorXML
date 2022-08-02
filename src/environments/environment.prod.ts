@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  ConexionWebApiProxy: 'http://localhost:3000/'
+  ConexionWebApiProxy: 'https://xmlgenerator-api.azurewebsites.net/'
 };
