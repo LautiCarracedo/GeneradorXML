@@ -155,13 +155,13 @@ export class BpcComponent implements OnInit {
         codBarras1Electronico: this.bpcForm.get('codBarras1Electronico')?.value,
         codBarras2Electronico: this.bpcForm.get('codBarras2Electronico')?.value,
       }
-      console.log(XMLBPC);
+      //console.log(XMLBPC);
 
       
       
       let codBarrasPresOK = this.codBarrasOK(formatoXML);
         this._bpcService.guardarXMLGenerado(XMLBPC).subscribe(data => {
-          console.log(data);
+          //console.log(data);
           const fileName = 'test'
           var blob = new Blob([data], { type: 'application/xml' });
           var url = window.URL.createObjectURL(blob);

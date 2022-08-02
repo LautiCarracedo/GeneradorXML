@@ -4,6 +4,7 @@ export class AddEntes {
     nombreEnte: string;
     comisionDebito: number;
     comisionCredito: number;
+    comisionPresencial: number;
     lote: string;
     nroComercio: string;
     tagGeneral: Array<any>;

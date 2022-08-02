@@ -250,6 +250,7 @@ export class AgregarEnteComponent implements OnInit {
         nombreEnte: this.addEnteForm.get('nombreBanco')?.value,
         comisionDebito: this.addEnteForm.get('comisionDeb')?.value,
         comisionCredito: this.addEnteForm.get('comisionCred')?.value,
+        comisionPresencial: this.addEnteForm.get('comisionPres')?.value,
         lote: this.addEnteForm.get('lote')?.value,
         nroComercio: this.addEnteForm.get('nroComercio')?.value,
         tagGeneral: this.obtenerCamposTagGeneralSelect(),
@@ -258,9 +259,9 @@ export class AgregarEnteComponent implements OnInit {
         tagDetallePago: this.obtenerCamposTagDPSelect(),
 
       }
-      console.log(ENTEAAGREGAR);
+      //console.log(ENTEAAGREGAR);
       this._entesService.guardarEnte(ENTEAAGREGAR).subscribe(data => {
-        console.log(data);
+        //console.log(data);
 
         alert('Ente añadido con exito');
         this.router.navigate(['/']);

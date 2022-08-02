@@ -1,5 +1,5 @@
 <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
-<form>
+<form [formGroup]="formBuscador">
     <div class="container-fluid">
         <div class='tituloPagina'>
             Configuración de entes (excepto BPC)
@@ -12,7 +12,7 @@
                 <label class="col-form-label">Origen:</label>
             </div>
             <div class="col-sm-8 col-md-2">
-                <select class="form-select">
+                <select [(ngModel)]="tipo" class="form-select" formControlName="origen">
                     <option>PSRM</option>
                     <option>OTAX</option>
                     <option>GANT</option>
@@ -22,7 +22,7 @@
 
             <!-- Botones -->
             <div class="justify-content-center botones">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" (click)="buscarEntesPorOrigen()">
                     <i class="fas fa-search"> </i> Buscar datos
                 </button>
             </div>
@@ -36,6 +36,7 @@
                         <th rowspan="2" class="text-center">Ente</th>
                         <th rowspan="2" class="text-center">Comisión débito (%)</th>
                         <th rowspan="2" class="text-center">Comisión crédito (%)</th>
+                        <th rowspan="2" class="text-center">Comisión presencial (%)</th>
                         <th colspan="2" class="text-center">Valores de campos</th>
                         <th rowspan="2" class="text-center">Cabeceras (o tags)</th>
                         <th rowspan="2" class="text-center text-nowrap">Acciones</th>
@@ -49,6 +50,7 @@
                         <td class="text-right">{{ ente.nroEnte }} - {{ ente.nombreEnte }}</td>
                         <td class="text-right">{{ ente.comisionDebito }}</td>
                         <td class="text-right">{{ ente.comisionCredito }}</td>
+                        <td class="text-right">{{ ente.comisionPresencial }}</td>
                         <td class="text-right">{{ ente.lote }}</td>
                         <td class="text-right">{{ ente.nroComercio }}</td>
                         <td class="text-right">General - Sucursal - Pagos - DetallePago</td>

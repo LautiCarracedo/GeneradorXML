@@ -1,4 +1,3 @@
-
 <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
 <form [formGroup]="formOtrosEntes" (ngSubmit)="obtenerXMLGeneradoEntes()">
   <div class='tituloPagina'>
@@ -13,16 +12,16 @@
         <label class="col-form-label">Origen:</label>
       </div>
       <div class="col-sm-8 col-md-2">
-        <select [(ngModel)]="origen" (change)="obtenerEntesGuardados($event.target.value)" class="form-select" formControlName="origen" ngForm>
+        <select [(ngModel)]="origen" (change)="obtenerEntesGuardados($event.target.value)" class="form-select"
+          formControlName="origen" ngForm>
           <option>PSRM</option>
           <option>OTAX</option>
           <option>GANT</option>
         </select>
       </div>
     </div>
-    <div>{{origen | json}}</div>
 
-    <hr>
+    <br>
 
     <div class="row">
       <div class="col-sm-4 col-md-2">
@@ -31,40 +30,40 @@
       <div class="col-sm-8 col-md-2">
         <select [(ngModel)]="tipo" class="form-select" formControlName="banco">
           <option *ngFor="let ente of entes" [value]="ente.nroEnte">{{ ente.nroEnte }}</option>
-          <!--<option>00935</option>
-          <option>00216</option>
-          <option>00202</option>
-          <option>00082</option>
-          <option>00079</option>-->
-        </select>
-
-      </div>
-
-      <div>{{tipo | json}}</div>
-
-
-      <div class="col-sm-4 col-md-2">
-        <label class="col-form-label">Comisión:</label>
-      </div>
-      <div class="col-sm-8 col-md-2">
-        <select class="form-select" formControlName="comision">
-          <option>Por defecto</option>
-          <option>Credito</option>
-          <option>Debito</option>
-          <option>Credito y Débito</option>
         </select>
       </div>
+      <small>Se mostrarán los campos correspondientes al seleccionar el banco</small>
 
-      <div class="col-sm-4 col-md-2">
-        <label class="col-form-label">Fecha de rendición:</label>
+      <br>
+      <br>
+
+      <div class="row">
+        <div class="col-sm-4 col-md-2">
+          <label class="col-form-label">Comisión:</label>
+        </div>
+        <div class="col-sm-8 col-md-2">
+          <select class="form-select" formControlName="comision">
+            <option>Por defecto</option>
+            <option>Credito</option>
+            <option>Debito</option>
+            <option>Credito y Débito</option>
+          </select>
+        </div>
       </div>
-      <div class="col-sm-8 col-md-2">
-        <input type="text" class="form-control" id="fechaRendicion" formControlName="fechaRendicion" placeholder="DD/MM/AAAA" maxlength="10"/>
+
+      <div class="row">
+        <div class="col-sm-4 col-md-2">
+          <label class="col-form-label">Fecha de rendición:</label>
+        </div>
+        <div class="col-sm-8 col-md-2">
+          <input type="text" class="form-control" id="fechaRendicion" formControlName="fechaRendicion"
+            placeholder="DD/MM/AAAA" maxlength="10" />
+        </div>
       </div>
     </div>
 
 
-    <hr>
+    <br>
 
     <div *ngIf="tipo == '00935'">
       <div class="row">
@@ -106,7 +105,8 @@
     </div>
 
 
-    <div *ngIf="tipo == '00216' || tipo == '00202' || tipo == '00207' || tipo == '00934' || tipo == '00204' || tipo == '00214'">
+    <div
+      *ngIf="tipo == '00216' || tipo == '00202' || tipo == '00207' || tipo == '00934' || tipo == '00204' || tipo == '00214'">
       <div class="row">
         <div class="col-sm-4 col-md-1">
           <label class="col-form-label">Boletas:</label>
@@ -137,7 +137,7 @@
         </div>
       </div>
     </div>
-    
+
 
 
     <div *ngIf="tipo == '00082' || tipo == '00079'">
@@ -153,14 +153,14 @@
           <label class="col-form-label">Cod barra 2 :</label>
         </div>
         <div class="col-sm-8 col-md-4">
-          <textarea cols="40" rows="10" class="form-control"  formControlName="codBarras2"></textarea>
+          <textarea cols="40" rows="10" class="form-control" formControlName="codBarras2"></textarea>
         </div>
 
         <div class="col-sm-4 col-md-1">
           <label class="col-form-label">Fec Pagos:</label>
         </div>
         <div class="col-sm-8 col-md-2">
-          <textarea cols="40" rows="10" class="form-control"  formControlName="fechasPagos"></textarea>
+          <textarea cols="40" rows="10" class="form-control" formControlName="fechasPagos"></textarea>
         </div>
 
         <div class="col-sm-4 col-md-1">
@@ -186,10 +186,13 @@
     <!-- Botones -->
     <div class="row">
       <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary" (click)="obtenerXMLGeneradoEntes">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        <button type="submit" [disabled]="formOtrosEntes.invalid" class="btn btn-primary" (click)="obtenerXMLGeneradoEntes">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download"
+            viewBox="0 0 16 16">
+            <path
+              d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+            <path
+              d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
           </svg> Generar XML
         </button>
       </div>
@@ -202,12 +205,12 @@
           Verificar cantidad de registros cargados
         </button>
       </div>
-      
-      
+
+
     </div>
 
-    
-  
+
+
   </div>
 
 </form>

@@ -40,21 +40,20 @@ export class OtrosEntesComponent implements OnInit {
       banco: ['', Validators.required],
       fechaRendicion: ['',Validators.required],
       comision: ['',Validators.required],
-      boletas: ['',Validators.required],
-      importes: ['',Validators.required],
-      fechasPagos: ['',Validators.required],
-      cantCuotas: ['',Validators.required],
-      cuotaActuales: ['',Validators.required],
-      codBarras1: ['',Validators.required],
-      codBarras2: ['',Validators.required],
+      boletas: [''],
+      importes: [''],
+      fechasPagos: [''],
+      cantCuotas: [''],
+      cuotaActuales: [''],
+      codBarras1: [''],
+      codBarras2: [''],
     })
     
-    //console.log(this.formOtrosEntes.get('origen')?.value);
+    
     
   }
 
-  getOrigen(origen : string | any){
-    console.log(origen);    
+  getOrigen(origen : string | any){    
     return origen;
   }
   
@@ -63,7 +62,7 @@ export class OtrosEntesComponent implements OnInit {
     this._entesService.getEntesCargados().subscribe((data: OtrosEntes[]) => {
       let dataOrigenSeleccioando = data.filter(dato => dato.origen == origen);
       this.entes = dataOrigenSeleccioando;
-      console.log(dataOrigenSeleccioando);
+      //console.log(dataOrigenSeleccioando);
     }, error => {
       console.log(error);
       alert("Hubo un inconveniente: " + error.message);
@@ -90,7 +89,7 @@ export class OtrosEntesComponent implements OnInit {
       }
       console.log(XMLENTES);
       this._entesService.guardarXMLOtrosEntesGenerado(XMLENTES).subscribe(data => {
-        console.log(data);
+        //console.log(data);
         const fileName = 'test'
         var blob = new Blob([data], { type: 'application/xml' });
         var url = window.URL.createObjectURL(blob);

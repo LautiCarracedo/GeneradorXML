@@ -30,7 +30,6 @@ export class UpdateBPCComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerIndicesValoresBPC();
-    console.log(this.tipo);
   }
 
 
@@ -48,7 +47,7 @@ export class UpdateBPCComponent implements OnInit {
 
   // Buscar segun los filtros de origen
   Buscar() {
-    console.log(this.updateBPCForm.value.origen);
+    //console.log(this.updateBPCForm.value.origen);
     let origen = this.updateBPCForm.value.origen;
     
     this._indicesValoresBPCService
@@ -63,16 +62,13 @@ export class UpdateBPCComponent implements OnInit {
             this.items = Object.values(this.listIndicesValoresBPC);
           }
         }
-        console.log(this.listIndicesValoresBPC);
-        console.log(Object.values(this.listIndicesValoresBPC));
-
         
       });
   }
 
   obtenerIndicesValoresBPC(){
     this._indicesValoresBPCService.getIndicesValoresBPC().subscribe(data => {
-      console.log(data);
+      //console.log(data);
       this.listIndicesValoresBPC = data;
 
     }, error => {
