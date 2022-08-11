@@ -16,9 +16,13 @@ export class BpcComponent implements OnInit {
   mostrarInputsAmbos : boolean;
   tipo: string = "";
   formatoXMLOK: string;
-
   bpcForm: FormGroup;
   fileXML: any;
+
+  contadorCodBarra1Presencial: number = 0;
+  contadorCodBarra2Presencial: number = 0;
+  contadorCodBarra1Electronico: number = 0;
+  contadorCodBarra2Electronico: number = 0;
 
 
   constructor(private fb: FormBuilder, 
@@ -53,7 +57,7 @@ export class BpcComponent implements OnInit {
         flagOKCodBarra1Pres = true;
       }
     }
-    return flagOKCodBarra1Pres;
+    return [flagOKCodBarra1Pres, arrayCodBarras1Pres];
   }
 
   splitCodBarra2Presencial(){
@@ -68,7 +72,7 @@ export class BpcComponent implements OnInit {
       }
     }
 
-    return flagOKCodBarra2Pres;
+    return [flagOKCodBarra2Pres, arrayCodBarras2Pres];
   }
 
   splitCodBarra1Electronico(){
@@ -76,11 +80,11 @@ export class BpcComponent implements OnInit {
     let codBarras1Electronico = this.bpcForm.get('codBarras1Electronico')?.value;
     let arrayCodBarras1Elec = codBarras1Electronico.split('\n');
     for (let i = 0; i < arrayCodBarras1Elec.length; i++){
-      if ((arrayCodBarras1Elec[i].length == 42) && (arrayCodBarras1Elec[i].substr(0,2) == "04")){
+      if ((arrayCodBarras1Elec[i].length == 42)){
         flagOKCodBarra1Elec = true;
       }
     }
-    return flagOKCodBarra1Elec;
+    return [flagOKCodBarra1Elec, arrayCodBarras1Elec];
   }
 
   splitCodBarra2Electronico(){
@@ -95,14 +99,14 @@ export class BpcComponent implements OnInit {
       }
     }
 
-    return flagOKCodBarra2Elec;
+    return [flagOKCodBarra2Elec, arrayCodBarras2Elec];
   }
 
   codBarrasOK(formatoXML: string){
-    let flagCodBarra1Pres = this.splitCodBarra1Presencial();
-    let flagCodBarra2Pres = this.splitCodBarra2Presencial();
-    let flagCodBarra1Elec = this.splitCodBarra1Electronico();
-    let flagCodBarra2Elec = this.splitCodBarra2Electronico();
+    let [flagCodBarra1Pres, codBarra1Presenciales] = this.splitCodBarra1Presencial();
+    let [flagCodBarra2Pres, codBarra2Presenciales] = this.splitCodBarra2Presencial();
+    let [flagCodBarra1Elec, codBarra1Electronicos] = this.splitCodBarra1Electronico();
+    let [flagCodBarra2Elec, codBarra2Electronicos] = this.splitCodBarra2Electronico();
 
     let flagCodBarrasOK = false;
 
@@ -138,6 +142,59 @@ export class BpcComponent implements OnInit {
     }
 
     return this.formatoXMLOK;
+  }
+
+  verificarCantRegistrosCargados(){
+    this.contadorCodBarra1Presencial = 0;
+    this.contadorCodBarra2Presencial = 0;
+    this.contadorCodBarra1Electronico = 0;
+    this.contadorCodBarra2Electronico = 0;
+
+    let [flagCodBarra1Pres, codBarra1Presenciales] = this.splitCodBarra1Presencial();
+    let [flagCodBarra2Pres, codBarra2Presenciales] = this.splitCodBarra2Presencial();
+    let [flagCodBarra1Elec, codBarra1Electronicos] = this.splitCodBarra1Electronico();
+    let [flagCodBarra2Elec, codBarra2Electronicos] = this.splitCodBarra2Electronico();
+
+    let formatoXML = this.obtenerFormatoXMLOK();
+
+    if (formatoXML === "Pagos presenciales"){
+      for (let i = 0; i < codBarra1Presenciales.length; i++){
+        this.contadorCodBarra1Presencial += 1;
+      }
+      for (let i = 0; i < codBarra2Presenciales.length; i++){
+        this.contadorCodBarra2Presencial += 1;
+      }
+    }
+    else if(formatoXML === "Pagos electronicos"){
+      for (let i = 0; i < codBarra1Electronicos.length; i++){
+        this.contadorCodBarra1Electronico += 1;
+      }
+      for (let i = 0; i < codBarra2Electronicos.length; i++){
+        this.contadorCodBarra2Electronico += 1;
+      }
+    }
+    else{
+      for (let i = 0; i < codBarra1Presenciales.length; i++){
+        this.contadorCodBarra1Presencial += 1;
+      }
+      for (let i = 0; i < codBarra2Presenciales.length; i++){
+        this.contadorCodBarra2Presencial += 1;
+      }
+      for (let i = 0; i < codBarra1Electronicos.length; i++){
+        this.contadorCodBarra1Electronico += 1;
+      }
+      for (let i = 0; i < codBarra2Electronicos.length; i++){
+        this.contadorCodBarra2Electronico += 1;
+      }
+    }
+
+    console.log(codBarra1Presenciales);
+    console.log(this.contadorCodBarra1Presencial);
+    
+
+    return [this.contadorCodBarra1Presencial, this.contadorCodBarra2Presencial, this.contadorCodBarra1Electronico, this.contadorCodBarra2Electronico]
+
+
   }
 
 

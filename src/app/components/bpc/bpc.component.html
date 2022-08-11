@@ -57,20 +57,40 @@
         <div *ngIf ="tipo == '0'">
             <div class="row">
                 <p><b>Codigos de barras para pagos presenciales</b></p>
+
                 <div class="col-sm-4 col-md-1">
                     <label class="col-form-label">Cod barra 1:</label>
                 </div>
                 <div class="col-sm-8 col-md-5">
                     <textarea cols="40" rows="10" class="form-control" formControlName="codBarras1Presencial"></textarea>
                 </div>
+             
     
                 <div class="col-sm-4 col-md-1">
                     <label class="col-form-label">Cod barra 2:</label>
                 </div>
                 <div class="col-sm-8 col-md-5">
                     <textarea cols="40" rows="10" class="form-control" formControlName="codBarras2Presencial"></textarea>
-                </div>
+                </div>                
             </div>
+
+            <div class="row">
+                <div class="col-sm-8 col-md-5">
+                    <div class="d-flex justify-content-center" [value]="contadorCodBarra1Presencial">
+                        <p id="cantRegistrosCodBarra1Presencial">Cantidad de registros para codBarra1: {{ contadorCodBarra1Presencial }}</p>
+                    </div>
+                </div> 
+                
+
+                <div class="col-sm-8 col-md-7">
+                    <div class="d-flex justify-content-center" [value]="contadorCodBarra2Presencial">
+                        <p id="cantRegistrosCodBarra2Presencial">Cantidad de registros para codBarra2: {{ contadorCodBarra2Presencial }}</p>
+                    </div>
+                </div> 
+            </div>
+
+            
+                            
         </div>
 
         <div *ngIf ="tipo == '1'">
@@ -89,6 +109,21 @@
                 <div class="col-sm-8 col-md-5">
                     <textarea cols="40" rows="10" class="form-control" formControlName="codBarras2Electronico"></textarea>
                 </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8 col-md-5">
+                    <div class="d-flex justify-content-center" [value]="contadorCodBarra1Electronico">
+                        <p id="cantRegistrosCodBarra1Elec">Cantidad de registros para codBarra1: {{ contadorCodBarra1Electronico }}</p>
+                    </div>
+                </div> 
+                
+
+                <div class="col-sm-8 col-md-7">
+                    <div class="d-flex justify-content-center" [value]="contadorCodBarra2Electronico">
+                        <p id="cantRegistrosCodBarra2Elec">Cantidad de registros para codBarra2: {{ contadorCodBarra2Electronico }}</p>
+                    </div>
+                </div> 
             </div>
         </div>
 
@@ -111,6 +146,22 @@
             </div>
 
             <div class="row">
+                <div class="col-sm-8 col-md-5">
+                    <div class="d-flex justify-content-center" [value]="contadorCodBarra1Presencial">
+                        <p id="cantRegistrosCodBarra1Ambos">Cantidad de registros para codBarra1: {{ contadorCodBarra1Presencial }}</p>
+                    </div>
+                </div> 
+                
+
+                <div class="col-sm-8 col-md-7">
+                    <div class="d-flex justify-content-center" [value]="contadorCodBarra2Presencial">
+                        <p id="cantRegistrosCodBarra2Ambos">Cantidad de registros para codBarra2: {{ contadorCodBarra2Presencial }}</p>
+                    </div>
+                </div>
+                 
+            </div>
+
+            <div class="row">
                 <p><b>Codigos de barras para pagos electrónicos</b></p>
                 <div class="col-sm-4 col-md-1">
                     <label class="col-form-label">Cod barra 1:</label>
@@ -125,6 +176,23 @@
                 <div class="col-sm-8 col-md-5">
                     <textarea cols="40" rows="10" class="form-control" formControlName="codBarras2Electronico"></textarea>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-8 col-md-5">
+                        <div class="d-flex justify-content-center" [value]="contadorCodBarra1Electronico">
+                            <p>Cantidad de registros para codBarra1: {{ contadorCodBarra1Electronico }}</p>
+                        </div>
+                    </div> 
+                    
+    
+                    <div class="col-sm-8 col-md-7">
+                        <div class="d-flex justify-content-center" [value]="contadorCodBarra2Electronico">
+                            <p>Cantidad de registros para codBarra1: {{ contadorCodBarra2Electronico }}</p>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </div>
 
@@ -139,7 +207,6 @@
     <hr>
 
     <!-- Botones -->
-    <!-- Botones -->
     <div class="row">
         <div class="d-flex justify-content-center">
             <button type="submit" [disabled]="bpcForm.invalid" class="btn btn-primary" (click)="obtenerXMLGeneradoBPC()">
@@ -153,7 +220,7 @@
         <p></p>
   
         <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" (click)="verificarCantRegistrosCargados()">
                 <i class="fas fa-plus"> </i>
                 Verificar cantidad de registros cargados
             </button>

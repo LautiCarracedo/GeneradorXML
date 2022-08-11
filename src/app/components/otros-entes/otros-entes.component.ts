@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OtrosEntes } from 'src/app/models/otros-entes';
 import { EntesVariosService } from 'src/app/services/entes-varios.service';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-otros-entes',
@@ -17,7 +18,8 @@ export class OtrosEntesComponent implements OnInit {
   //@Input('origen') value: string;
 
   constructor(private fb: FormBuilder,
-              private _entesService: EntesVariosService) {
+              private _entesService: EntesVariosService,
+              private _spinnerService: SpinnerService) {
     this.formOtrosEntes = this.fb.group({
       origen:['',Validators.required],
       banco: ['', Validators.required],
@@ -59,6 +61,7 @@ export class OtrosEntesComponent implements OnInit {
   
 
   obtenerEntesGuardados(origen : string | any){
+    //this._spinnerService.llamarSpinner();
     this._entesService.getEntesCargados().subscribe((data: OtrosEntes[]) => {
       let dataOrigenSeleccioando = data.filter(dato => dato.origen == origen);
       this.entes = dataOrigenSeleccioando;

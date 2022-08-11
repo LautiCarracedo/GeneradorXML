@@ -11,11 +11,14 @@ import { BpcComponent } from './components/bpc/bpc.component';
 import { OtrosEntesComponent } from './components/otros-entes/otros-entes.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgregarEnteComponent } from './components/agregar-ente/agregar-ente.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UpdateBPCComponent } from './components/update-bpc/update-bpc.component'
 import { DownloadService } from './services/download.service';
 import { UpdateValoresBpcComponent } from './components/update-valores-bpc/update-valores-bpc.component';
 import { HomeAbmEntesComponent } from './components/home-abm-entes/home-abm-entes.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { InterceptorService } from './services/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -33,12 +36,17 @@ import { HomeAbmEntesComponent } from './components/home-abm-entes/home-abm-ente
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSpinnerModule
   ],
-  providers: [DownloadService],
-  bootstrap: [AppComponent]
+  providers: [
+    DownloadService, 
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
+  bootstrap: [AppComponent],
+  exports: []
 })
 export class AppModule { }

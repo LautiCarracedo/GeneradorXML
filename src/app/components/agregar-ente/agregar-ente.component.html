@@ -1,5 +1,11 @@
+<div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>¡Ente agregado con éxito!</strong> El mismo se podrá visualizar en la sección Configurar Entes.
+    <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
-<!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
+
 <form [formGroup]="addEnteForm" (ngSubmit)="agregarEnte()">
     <div class='tituloPagina'>
         Agregar nuevos entes
@@ -14,7 +20,7 @@
                     <label class="col-form-label">Origen:</label>
                 </div>
                 <div class="col-sm-8 col-md-2">
-                    <select class="form-control" formControlName="origen">
+                    <select class="form-select" formControlName="origen">
                         <option>PSRM</option>
                         <option>OTAX</option>
                         <option>GANT</option>
@@ -22,7 +28,7 @@
                 </div>
             </div>
 
-            <hr>
+            <br>
 
             <div class="row">
                 <div class="col-sm-4 col-md-2">
@@ -41,7 +47,7 @@
 
             </div>
 
-            <hr>
+            <br>
 
             <div class="row">
                 <div class="col-sm-4 col-md-2">
@@ -66,7 +72,7 @@
                 </div>
             </div>
 
-            <hr>
+            <br>
 
             <div class="row">
                 <div class="col-sm-4 col-md-2">
@@ -89,9 +95,36 @@
 
         <hr>
         
-        <h6>Seleccionar los campos que desea generar en cada cabecera en el archivo XML final</h6>
+        <h6><b>Seleccionar los campos que desea generar en cada cabecera en el archivo XML final.</b></h6>
+        <h6>Con el fin de parametrizar los atributos, seleccionar la opción correspondiente en las siguientes preguntas:</h6>
+        
+        <div class="row">
+            <div class="col-sm-4 col-md-4">
+                <label class="col-form-label" for="question-codbarra">¿Manejo de codigos de barras en input/output?</label>
+            </div>
+            <div class="col-sm-8 col-md-2">
+                <select class="form-select" formControlName="question-codbarra">
+                    <option>Si</option>
+                    <option>No</option>
+                </select>
+            </div>
+        </div>
 
-        <div class="columna">
+        <br>
+
+        <div class="row">
+            <div class="col-sm-4 col-md-5">
+                <label class="col-form-label" for="question-atr">¿Atributo 'totalImpAnulacionTimbradoras' en alguna cabecera?</label>
+            </div>
+            <div class="col-sm-8 col-md-2">
+                <select class="form-select" formControlName="question-atr">
+                    <option>Si</option>
+                    <option>No</option>
+                </select>
+            </div>
+        </div>
+
+        <!--<div class="columna">
             <h6>Cabecera General</h6>
             <div class="form-check col-sm-8 col-md-8" *ngFor="let valor of camposTagGeneral">
                 <input class="form-check-input" type="checkbox" name="{{ valor.campo }}" (change)="onchange()" [(ngModel)]="valor.seleccionado" formControlName="tagGeneral">
@@ -129,7 +162,7 @@
                     {{ valor.campo }}
                 </label>
             </div>
-        </div>
+        </div>-->
 
 
         <br>

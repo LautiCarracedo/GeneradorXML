@@ -13,6 +13,7 @@ export class UpdateValoresBpcComponent implements OnInit {
   updateValoresBPCForm: FormGroup;
   campo: string | null;
   origen: string;
+  alert: boolean = false;
 
 
   constructor(private fb: FormBuilder,
@@ -51,11 +52,15 @@ export class UpdateValoresBpcComponent implements OnInit {
     this.indicesBPCService.editarIndicesValoresBPC("PSRM", this.campo, indicesCampos).subscribe(data => {
       console.log(data);
       
-      alert('Indices actualizados con exito');
+      this.alert = true;
       this.router.navigate(['update-bpc']);
     }, error => {
       console.log(error);
     })
+  }
+
+  closeAlert(){
+    this.alert = false;
   }
 
 }

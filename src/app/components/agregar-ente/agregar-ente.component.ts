@@ -12,6 +12,32 @@ import { EntesVariosService } from 'src/app/services/entes-varios.service';
 export class AgregarEnteComponent implements OnInit {
 
   addEnteForm: FormGroup;
+  alert: boolean = false;
+  /*Análisis para determinar cuales son los atributos de cada tag:
+  Caso 1) Rta 1 == true y rta2 == true ==> Ente PagoFacil o similar (podriamos decir ente presencial?).
+          En ese caso definimos en camposTagXXX los atributos que hagan falta.
+  Caso 2) Rta 1 == false y rta2 == true ==> Ente similar a MasterCard Cred (00214)
+          En ese caso definimos en camposTagXXX los atributos que hagan falta.
+  Caso 3) Rta 1 == false y rta2 == false ==> Ente comun.
+          En ese caso definimos en camposTagXXX los atributos que hagan falta.
+
+  Para entender este analisis es necesario hacer un analisis detallado de los campos de cada XML. Sirve para enviar 
+  al servidor los atributos necesarios. Luego en el back se haran validaciones necesarias.
+  */
+
+  //Caso1
+  /*camposTagGeneralCaso1: camposTagGeneralCaso1 [] = [];
+  camposTagSucursalCaso1: camposTagSucursalCaso1 [] = [];
+  camposTagPagosCaso1: camposTagPagosCaso1 [] = [];
+  camposTagDPCaso1: camposTagDPCaso1 [] = [];
+
+  //Caso 2
+  camposTagGeneralCaso2: camposTagGeneralCaso2 [] = [];
+  camposTagSucursalCaso2: camposTagSucursalCaso2 [] = [];
+  camposTagPagosCaso2: camposTagPagosCaso2 [] = [];
+  camposTagDPCaso2: camposTagDPCaso2 [] = [];*/
+
+  //Caso 3
   camposTagGeneral: camposTagGeneral[] = [];
   camposTagSucursal: camposTagSucursal[] = [];
   camposTagPagos: camposTagPagos[] = [];
@@ -19,6 +45,8 @@ export class AgregarEnteComponent implements OnInit {
 
   origen: string | null;
   nroEnte: string | null;
+  rtaQuestionCodBarra: string | null;
+  rtaQuestionAtributo: string | null;
 
 
   /*camposTagSucursal: {
@@ -50,16 +78,17 @@ export class AgregarEnteComponent implements OnInit {
       nombreBanco: ['', Validators.required],
       comisionDeb: ['', Validators.required],
       comisionCred: ['', Validators.required],
+      comisionPres: ['', Validators.required],
       lote: ['', Validators.required],
       nroComercio: ['', Validators.required],
-      tagGeneral: this.obtenerCamposTagGeneralSelect(),
-      tagSucursal: this.obtenerCamposTagSucursalSelect(),
-      tagPagos: this.obtenerCamposTagPagosSelect(),
-      tagDP: this.obtenerCamposTagDPSelect(),
+      questionCodbarra: ['', Validators.required],
+      questionAtribute: ['', Validators.required]
     })
 
     this.origen = this.aRouter.snapshot.paramMap.get('origen');
     this.nroEnte = this.aRouter.snapshot.paramMap.get('nroEnte');
+    this.rtaQuestionCodBarra = this.aRouter.snapshot.paramMap.get('question-codbarra');
+    this.rtaQuestionAtributo = this.aRouter.snapshot.paramMap.get('question-atr');
 
   }
 
@@ -81,12 +110,11 @@ export class AgregarEnteComponent implements OnInit {
           nombreBanco: data.nombreEnte,
           comisionDeb: data.comisionDebito,
           comisionCred: data.comisionCredito,
+          comisionPres: data.comisionPresencial,
           lote: data.lote,
           nroComercio: data.nroComercio,
-          tagGeneral: data.tagGeneral,
-          tagSucursal: data.tagGeneral,
-          tagPagos: data.tagGeneral,
-          tagDP: data.tagGeneral,
+          questionCodBarra: data.questionCodBarra,
+          questionAtribute: data.questionAtribute
         })
       })
     }
@@ -99,144 +127,210 @@ export class AgregarEnteComponent implements OnInit {
   }
 
   obtenerCamposTagGeneral() {
+    if ((this.rtaQuestionCodBarra === "No" && this.rtaQuestionAtributo === "Si") || 
+        (this.rtaQuestionCodBarra === "Si" && this.rtaQuestionAtributo === "Si")){
+      this.camposTagGeneral = [
+        { id: 1, campo: 'banco' },
+        { id: 2, campo: 'nroTransaccion' },
+        { id: 3, campo: 'nroRendicion' },
+        { id: 4, campo: 'fechaRendicion' },
+        { id: 5, campo: 'cbuOrigen' },
+        { id: 6, campo: 'cuitOrigen' },
+        { id: 7, campo: 'cbuDestino' },
+        { id: 8, campo: 'cuitDestino' },
+        { id: 9, campo: 'registros' },
+        { id: 10, campo: 'totalImpDeterminado' },
+        { id: 11, campo: 'totalImpPagado' },
+        { id: 12, campo: 'totalImpRecaudado' },
+        { id: 13, campo: 'totalImpDepositado' },
+        { id: 14, campo: 'totalImpADepositar' },
+        { id: 15, campo: 'totalImpAnulacionTimbradoras' },
+        { id: 16, campo: 'totalImpComision' },
+        { id: 17, campo: 'totalImpIVA' },
+      ]
+    }
 
-    this.camposTagGeneral = [
-      { id: 1, campo: 'banco', seleccionado: false },
-      { id: 2, campo: 'nroTransaccion', seleccionado: false },
-      { id: 3, campo: 'nroRendicion', seleccionado: false },
-      { id: 4, campo: 'fechaRendicion', seleccionado: false },
-      { id: 5, campo: 'cbuOrigen', seleccionado: false },
-      { id: 6, campo: 'cuitOrigen', seleccionado: false },
-      { id: 7, campo: 'cbuDestino', seleccionado: false },
-      { id: 8, campo: 'cuitDestino', seleccionado: false },
-      { id: 9, campo: 'registros', seleccionado: false },
-      { id: 10, campo: 'totalImpDeterminado', seleccionado: false },
-      { id: 11, campo: 'totalImpPagado', seleccionado: false },
-      { id: 12, campo: 'totalImpRecaudado', seleccionado: false },
-      { id: 13, campo: 'totalImpDepositado', seleccionado: false },
-      { id: 14, campo: 'totalImpADepositar', seleccionado: false },
-      { id: 15, campo: 'totalImpAnulacionTimbradoras', seleccionado: false },
-      { id: 16, campo: 'totalImpComision', seleccionado: false },
-      { id: 17, campo: 'totalImpIVA', seleccionado: false },
-    ]
-
+    else if (this.rtaQuestionCodBarra === "No" && this.rtaQuestionAtributo === "No"){
+      this.camposTagGeneral = [
+        { id: 1, campo: 'banco' },
+        { id: 2, campo: 'nroTransaccion' },
+        { id: 3, campo: 'nroRendicion' },
+        { id: 4, campo: 'fechaRendicion' },
+        { id: 5, campo: 'cbuOrigen' },
+        { id: 6, campo: 'cuitOrigen' },
+        { id: 7, campo: 'cbuDestino' },
+        { id: 8, campo: 'cuitDestino' },
+        { id: 9, campo: 'registros' },
+        { id: 10, campo: 'totalImpDeterminado' },
+        { id: 11, campo: 'totalImpPagado' },
+        { id: 12, campo: 'totalImpRecaudado' },
+        { id: 13, campo: 'totalImpDepositado' },
+        { id: 14, campo: 'totalImpADepositar' },
+        { id: 15, campo: 'totalImpComision' },
+        { id: 16, campo: 'totalImpIVA' },
+      ]
+    }
     return this.camposTagGeneral;
 
   }
 
-  obtenerCamposTagGeneralSelect() {
-    let arrTagGeneral = this.camposTagGeneral;
-    let arrTagGeneralCamposSelect = [];
-    for (let i = 0; i < arrTagGeneral.length; i++) {
-      if (arrTagGeneral[i].seleccionado === true) {
-        arrTagGeneralCamposSelect.push(arrTagGeneral[i].campo);
-      }
-    }
-
-    return arrTagGeneralCamposSelect;
-  }
 
   obtenerCamposTagSucursal() {
+    if ((this.rtaQuestionCodBarra === "No" && this.rtaQuestionAtributo === "Si") || 
+        (this.rtaQuestionCodBarra === "Si" && this.rtaQuestionAtributo === "Si")){
+      this.camposTagSucursal = [
+        { id: 1, campo: 'sucursal' },
+        { id: 2, campo: 'registros' },
+        { id: 3, campo: 'totalImpDeterminado' },
+        { id: 4, campo: 'totalImpPagado' },
+        { id: 5, campo: 'totalImpRecaudado' },
+        { id: 6, campo: 'totalImpDepositado' },
+        { id: 7, campo: 'totalImpADepositar' },
+        { id: 8, campo: 'totalImpAnulacionTimbradoras' },
+        { id: 9, campo: 'totalImpComision' },
+        { id: 10, campo: 'totalImpIVA' },
+      ]
+    }
 
-    this.camposTagSucursal = [
-      { id: 1, campo: 'sucursal', seleccionado: false },
-      { id: 2, campo: 'registros', seleccionado: false },
-      { id: 3, campo: 'totalImpDeterminado', seleccionado: false },
-      { id: 4, campo: 'totalImpPagado', seleccionado: false },
-      { id: 5, campo: 'totalImpRecaudado', seleccionado: false },
-      { id: 6, campo: 'totalImpDepositado', seleccionado: false },
-      { id: 7, campo: 'totalImpADepositar', seleccionado: false },
-      { id: 8, campo: 'totalImpAnulacionTimbradoras', seleccionado: false },
-      { id: 9, campo: 'totalImpComision', seleccionado: false },
-      { id: 10, campo: 'totalImpIVA', seleccionado: false }
-    ]
+    else if (this.rtaQuestionCodBarra === "No" && this.rtaQuestionAtributo === "No"){
+      this.camposTagSucursal = [
+        { id: 1, campo: 'sucursal' },
+        { id: 2, campo: 'registros' },
+        { id: 3, campo: 'totalImpDeterminado' },
+        { id: 4, campo: 'totalImpPagado' },
+        { id: 5, campo: 'totalImpRecaudado' },
+        { id: 6, campo: 'totalImpDepositado' },
+        { id: 7, campo: 'totalImpADepositar' },
+        { id: 8, campo: 'totalImpComision' },
+        { id: 9, campo: 'totalImpIVA' },
+      ]
+    }
 
     return this.camposTagSucursal;
 
   }
 
-  obtenerCamposTagSucursalSelect() {
-    let arrTagSucursal = this.camposTagSucursal;
-    let arrTagSucursalCamposSelect = [];
-    for (let i = 0; i < arrTagSucursal.length; i++) {
-      if (arrTagSucursal[i].seleccionado === true) {
-        arrTagSucursalCamposSelect.push(arrTagSucursal[i].campo);
-      }
-    }
 
-    return arrTagSucursalCamposSelect;
-  }
 
   obtenerCamposTagPagos() {
+    if (this.rtaQuestionCodBarra === "Si" && this.rtaQuestionAtributo === "Si"){
+      this.camposTagPagos = [
+        { id: 1, campo: 'codigoRegistro' },
+        { id: 2, campo: 'caja' },
+        { id: 3, campo: 'cajero' },
+        { id: 4, campo: 'fechaAcreditacion' },
+        { id: 5, campo: 'lote' },
+        { id: 6, campo: 'registros' },
+        { id: 7, campo: 'totalImpDeterminado' },
+        { id: 8, campo: 'totalImpPagado' },
+        { id: 9, campo: 'totalImpComision' },
+        { id: 10, campo: 'totalImpIVA' }
+      ]
+    }
+    else if (this.rtaQuestionCodBarra === "No" && this.rtaQuestionAtributo === "Si"){
+      this.camposTagPagos = [
+        { id: 1, campo: 'codigoRegistro' },
+        { id: 2, campo: 'caja' },
+        { id: 3, campo: 'cajero' },
+        { id: 4, campo: 'lote' },
+        { id: 5, campo: 'registros' },
+        { id: 6, campo: 'totalImpDeterminado' },
+        { id: 7, campo: 'totalImpPagado' },
+        { id: 8, campo: 'totalImpComision' },
+        { id: 9, campo: 'totalImpIVA' }
+      ]
+    }
 
-    this.camposTagPagos = [
-      { id: 1, campo: 'codigoRegistro', seleccionado: false },
-      { id: 2, campo: 'caja', seleccionado: false },
-      { id: 3, campo: 'cajero', seleccionado: false },
-      { id: 4, campo: 'lote', seleccionado: false },
-      { id: 5, campo: 'registros', seleccionado: false },
-      { id: 6, campo: 'totalImpDeterminado', seleccionado: false },
-      { id: 7, campo: 'totalImpPagado', seleccionado: false },
-      { id: 8, campo: 'totalImpComision', seleccionado: false },
-      { id: 9, campo: 'totalImpIVA', seleccionado: false }
-    ]
+    else if (this.rtaQuestionCodBarra === "No" && this.rtaQuestionAtributo === "No"){
+      this.camposTagPagos = [
+        { id: 1, campo: 'codigoRegistro' },
+        { id: 2, campo: 'caja' },
+        { id: 3, campo: 'cajero' },
+        { id: 4, campo: 'lote' },
+        { id: 5, campo: 'registros' },
+        { id: 6, campo: 'totalImpDeterminado' },
+        { id: 7, campo: 'totalImpPagado' },
+        { id: 8, campo: 'totalImpComision' },
+        { id: 9, campo: 'totalImpIVA' }
+      ]
+    }
 
     return this.camposTagPagos;
   }
 
-  obtenerCamposTagPagosSelect() {
-    let arrTagPagos = this.camposTagPagos;
-    let arrTagPagosCamposSelect = [];
-    for (let i = 0; i < arrTagPagos.length; i++) {
-      if (arrTagPagos[i].seleccionado === true) {
-        arrTagPagosCamposSelect.push(arrTagPagos[i].campo);
-      }
-    }
 
-    return arrTagPagosCamposSelect;
-  }
 
   obtenerCamposTagDP() {
+    if (this.rtaQuestionCodBarra === "Si" && this.rtaQuestionAtributo === "Si"){
+      this.camposTagDP = [
+        { id: 1, campo: 'codigoRegistro' },
+        { id: 2, campo: 'nroRegistro' },
+        { id: 3, campo: 'impuesto' },
+        { id: 4, campo: 'fechaVencimiento' },
+        { id: 5, campo: 'idObjetoImponible' },
+        { id: 6, campo: 'nroControl' },
+        { id: 7, campo: 'marcaMovimiento' },
+        { id: 8, campo: 'tipoOperacion' },
+        { id: 9, campo: 'tipoRendicion' },
+        { id: 10, campo: 'moneda' },
+        { id: 11, campo: 'nroLiquidacionOriginal' },
+        { id: 12, campo: 'nroLiquidacionActualizado' },
+        { id: 13, campo: 'obligacion' },
+        { id: 14, campo: 'barra1' },
+        { id: 15, campo: 'barra2' },
+        { id: 16, campo: 'fechaPago' },
+        { id: 17, campo: 'impDeterminado' },
+        { id: 18, campo: 'impPagado' },
+        { id: 19, campo: 'impComision' },
+        { id: 20, campo: 'impIVA' }
+      ]
+    }
+    else if (this.rtaQuestionCodBarra === "No" && this.rtaQuestionAtributo === "Si"){
+      this.camposTagDP = [
+        { id: 1, campo: 'codigoRegistro' },
+        { id: 2, campo: 'nroRegistro' },
+        { id: 3, campo: 'nroControl' },
+        { id: 4, campo: 'marcaMovimiento' },
+        { id: 5, campo: 'tipoOperacion' },
+        { id: 6, campo: 'tipoRendicion' },
+        { id: 7, campo: 'moneda' },
+        { id: 8, campo: 'nroLiquidacionOriginal' },
+        { id: 9, campo: 'nroLiquidacionActualizado' },
+        { id: 10, campo: 'fechaPago' },
+        { id: 12, campo: 'impDeterminado' },
+        { id: 13, campo: 'impPagado' },
+        { id: 14, campo: 'impComision' },
+        { id: 15, campo: 'impIVA' },
+        { id: 16, campo: 'nroComercio' },
+        { id: 17, campo: 'cantCuotas' }
+      ]
+    }
 
-    this.camposTagDP = [
-      { id: 1, campo: 'codigoRegistro', seleccionado: false },
-      { id: 2, campo: 'nroRegistro', seleccionado: false },
-      { id: 3, campo: 'impuesto', seleccionado: false },
-      { id: 4, campo: 'fechaVencimiento', seleccionado: false },
-      { id: 5, campo: 'nroControl', seleccionado: false },
-      { id: 6, campo: 'marcaMovimiento', seleccionado: false },
-      { id: 7, campo: 'tipoOperacion', seleccionado: false },
-      { id: 8, campo: 'tipoRendicion', seleccionado: false },
-      { id: 9, campo: 'moneda', seleccionado: false },
-      { id: 10, campo: 'nroLiquidacionOriginal', seleccionado: false },
-      { id: 11, campo: 'nroLiquidacionActualizado', seleccionado: false },
-      { id: 12, campo: 'fechaPago', seleccionado: false },
-      { id: 13, campo: 'impDeterminado', seleccionado: false },
-      { id: 14, campo: 'impPagado', seleccionado: false },
-      { id: 15, campo: 'impComision', seleccionado: false },
-      { id: 16, campo: 'impIVA', seleccionado: false },
-      { id: 17, campo: 'nroComercio', seleccionado: false },
-      { id: 18, campo: 'cantCuotas', seleccionado: false },
-      { id: 19, campo: 'idObjetoImponible', seleccionado: false },
-      { id: 20, campo: 'barra1', seleccionado: false },
-      { id: 21, campo: 'barra2', seleccionado: false },
-      { id: 22, campo: 'obligacion', seleccionado: false },
-    ]
+    else if (this.rtaQuestionCodBarra === "No" && this.rtaQuestionAtributo === "No"){
+      this.camposTagDP = [
+        { id: 1, campo: 'codigoRegistro' },
+        { id: 2, campo: 'nroRegistro' },
+        { id: 3, campo: 'nroControl' },
+        { id: 4, campo: 'marcaMovimiento' },
+        { id: 5, campo: 'tipoOperacion' },
+        { id: 6, campo: 'tipoRendicion' },
+        { id: 7, campo: 'moneda' },
+        { id: 8, campo: 'nroLiquidacionOriginal' },
+        { id: 9, campo: 'nroLiquidacionActualizado' },
+        { id: 10, campo: 'fechaPago' },
+        { id: 12, campo: 'impDeterminado' },
+        { id: 13, campo: 'impPagado' },
+        { id: 14, campo: 'impComision' },
+        { id: 15, campo: 'impIVA' },
+        { id: 16, campo: 'nroComercio' },
+        { id: 17, campo: 'cantCuotas' },
+        { id: 18, campo: 'idObjetoImponible' },
+        { id: 19, campo: 'obligacion' }
+      ]
+    }
 
     return this.camposTagDP;
 
-  }
-
-  obtenerCamposTagDPSelect() {
-    let arrTagDP = this.camposTagDP;
-    let arrTagDPCamposSelect = [];
-    for (let i = 0; i < arrTagDP.length; i++) {
-      if (arrTagDP[i].seleccionado === true) {
-        arrTagDPCamposSelect.push(arrTagDP[i].campo);
-      }
-    }
-
-    return arrTagDPCamposSelect;
   }
 
 
@@ -253,45 +347,45 @@ export class AgregarEnteComponent implements OnInit {
         comisionPresencial: this.addEnteForm.get('comisionPres')?.value,
         lote: this.addEnteForm.get('lote')?.value,
         nroComercio: this.addEnteForm.get('nroComercio')?.value,
-        tagGeneral: this.obtenerCamposTagGeneralSelect(),
-        tagSucursal: this.obtenerCamposTagSucursalSelect(),
-        tagPagos: this.obtenerCamposTagPagosSelect(),
-        tagDetallePago: this.obtenerCamposTagDPSelect(),
+        tagGeneral: this.obtenerCamposTagGeneral(),
+        tagSucursal: this.obtenerCamposTagSucursal(),
+        tagPagos: this.obtenerCamposTagPagos(),
+        tagDetallePago: this.obtenerCamposTagDP(),
 
       }
       //console.log(ENTEAAGREGAR);
       this._entesService.guardarEnte(ENTEAAGREGAR).subscribe(data => {
         //console.log(data);
 
-        alert('Ente añadido con exito');
+        this.alert = true;
         this.router.navigate(['/']);
       }, error => {
         console.log(error);
       })
     }
   }
+
+  closeAlert(){
+    this.alert = false;
+  }
 }
 
 class camposTagGeneral {
   id: number;
   campo: string;
-  seleccionado: boolean;
 }
 
 class camposTagSucursal {
   id: number;
   campo: string;
-  seleccionado: boolean;
 }
 
 class camposTagPagos {
   id: number;
   campo: string;
-  seleccionado: boolean;
 }
 
 class camposTagDP {
   id: number;
   campo: string;
-  seleccionado: boolean;
 }
